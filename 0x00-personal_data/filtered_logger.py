@@ -19,6 +19,7 @@ class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
     """
 
+    REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
@@ -31,6 +32,6 @@ class RedactingFormatter(logging.Formatter):
         """
         Method to filter values in incoming log records using filter_datum
         """
-        record.msg = filter_datum(self.fields, "***", record.msg,
-                                  self.SEPARATOR)
+        record.msg = filter_datum(self.fields, RedactingFormatter.REDACTION,
+                                  record.msg, self.SEPARATOR)
         return super().format(record)
