@@ -8,8 +8,23 @@ from typing import List, TypeVar
 class Auth:
     """Class module"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Method that requires authentication"""
-        return False
+        """Method that checks if a path requires authentication"""
+        if path is None or excluded_paths is None:
+            return True
+        if path[-1] != '/':
+            path = path + '/'
+        else:
+            path = path
+        has_wildcard = any(e_p.endswith("*") for e_p in excluded_paths)
+        if not has_wildcard:
+            return path not in excluded_paths
+        for e in excluded_paths:
+            if e.endswith("*"):
+                if path.startswith(e[:-1]):
+                    return False
+            if path == e:
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Method that authorizes header"""
