@@ -77,11 +77,11 @@ class BasicAuth(Auth):
         if not header:
             return None
 
-        extracted = self.extract_base64_authorization_header(auth_header)
+        extracted = self.extract_base64_authorization_header(header)
         if not extracted:
             return None
 
-        decoded = self.decode_base64_authorization_header(encoded)
+        decoded = self.decode_base64_authorization_header(extracted)
         if not decoded:
             return None
 
