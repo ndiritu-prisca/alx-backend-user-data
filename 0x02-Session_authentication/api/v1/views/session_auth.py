@@ -20,7 +20,7 @@ def login():
         users = User.search({"email": email})
     except Exception:
         return jsonify(error="no user found for this email"), 404
-    if not user:
+    if not users:
         return jsonify(error="no user found for this email"), 404
     for user in users:
         if user.is_valid_password(pwd):
