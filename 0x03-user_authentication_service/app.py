@@ -86,7 +86,7 @@ def reset_password() -> str:
 def update_pwd() -> str:
     """Route to update password reset"""
     email = request.form.get("email")
-    pwd = request.form.get("pwd")
+    pwd = request.form.get("new_password")
     try:
         reset_token = request.form.get("reset_token")
     except Exception:
