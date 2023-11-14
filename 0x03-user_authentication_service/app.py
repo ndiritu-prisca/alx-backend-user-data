@@ -82,5 +82,17 @@ def reset_password() -> str:
         abort(403)
 
 
+@app.route('/reset_password', methods=['PUT'])
+def update_pwd() -> str:
+    """Route to update password reset"""
+    try:
+        email = request.form.get("email")
+        reset_token = request.form.get("reset_token")
+        pwd = request.form.get("pwd")
+        AUTH.update_password(reset_token, pwd)
+    except Exception:
+        abort(403)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
