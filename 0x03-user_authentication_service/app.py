@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Flask app module"""
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 from user import User
 
@@ -40,6 +40,18 @@ def login() -> str:
         return response
     else:
         abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """Implementation of logout"""
+    sess_id = request.cookies.get('session_id')
+    try:
+        user = AUTH.get_user_from_session(sess_id)
+    except Exception:
+        abort(403)
+    AUTH.destory_session(user.id)
+    return redirect('/')
 
 
 if __name__ == "__main__":
