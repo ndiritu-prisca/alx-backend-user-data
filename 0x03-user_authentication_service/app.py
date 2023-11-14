@@ -46,9 +46,8 @@ def login() -> str:
 def logout():
     """Implementation of logout"""
     sess_id = request.cookies.get('session_id')
-    try:
-        user = AUTH.get_user_from_session(sess_id)
-    except Exception:
+    user = AUTH.get_user_from_session(sess_id)
+    if not user:
         abort(403)
     AUTH.destory_session(user.id)
     return redirect('/')
