@@ -91,7 +91,11 @@ def update_pwd() -> str:
         reset_token = request.form.get("reset_token")
     except Exception:
         abort(403)
-    AUTH.update_password(reset_token, pwd)
+    try:
+        AUTH.update_password(reset_token, pwd)
+    except ValueError:
+        abort(403)
+
     return jsonify({"email": "f{email}", "message": "Password updated"}), 200
 
 
