@@ -54,5 +54,19 @@ def logout() -> str:
     return redirect('/')
 
 
+@app.route('/profile', methods=['GET'])
+def profile() -> str:
+    """Method to find user and respond with 200 HTTP Status"""
+    sess_id = request.cookies.get("session_id")
+    if not sess_id:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(sess_id)
+    if not user:
+        abort(403)
+
+    return jsonify({"email": f"{user.email}"}), 200
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
