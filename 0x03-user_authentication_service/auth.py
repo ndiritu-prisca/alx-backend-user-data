@@ -75,8 +75,7 @@ class Auth:
         """Method that takes a single user_id integer argument and returns
         None"""
         try:
-            user = self._db.find_user_by(user_id=user_id)
+            user = self._db.find_user_by(id=user_id)
         except NoResultFound:
-            return 
+            pass
         self._db.update_user(user.id, session_id=None)
-        return None
