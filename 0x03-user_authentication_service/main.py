@@ -48,7 +48,7 @@ def profile_unlogged() -> None:
 
 def profile_logged(session_id: str) -> None:
     """Integration test for validation of profile with login"""
-    cookies = {"session_id": ""}
+    cookies = {"session_id": session_id}
     response = requests.get(f'{URL}/profile', cookies=cookies)
     assert response.status_code == 200
 
